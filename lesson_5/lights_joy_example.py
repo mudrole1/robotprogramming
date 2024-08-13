@@ -54,6 +54,11 @@ def lightsBackOFF():
     np[backlights[0]] = led_off
     np.show()
 
+def lightsIndicatorsOFF():
+    for x in indicator_warning:
+        np[x] = led_off
+    np.show()
+
 def lightsIndicator(direction, last_ind_act):
     if ticks_diff(ticks_ms(), last_ind_act) >= 400 and np[direction[0]] == led_off:
         for x in direction:
@@ -82,3 +87,13 @@ while True:
     sleep(1000)
     lightsOFF()  #Light off
     sleep(1000)# Write your code here :-)
+    last_time = ticks_ms()
+    while not button_a.is_pressed():
+        last_time = lightsIndicator(indicator_right, last_time)
+        sleep(500)
+    lightsIndicatorsOFF()
+    last_time = ticks_ms()
+    while not button_b.is_pressed():
+        last_time = lightsIndicator(indicator_left, last_time)
+        sleep(500)
+    lightsIndicatorsOFF()
